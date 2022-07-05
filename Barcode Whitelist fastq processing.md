@@ -3,6 +3,7 @@ This pipeline generates a whitelist of barcodes present in the WILD-seq cell poo
 
 ## Prerequisits
 **cutadapt** Available from https://cutadapt.readthedocs.io/en/stable/#
+
 **umi_tools** Available from https://umi-tools.readthedocs.io/en/latest/
 
 ## Input file
