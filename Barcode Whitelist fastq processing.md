@@ -47,7 +47,7 @@ sort SLX-21864.DNAA001.barcodes.UMI.txt | uniq -c > SLX-21864.DNAA001.barcodes.U
 Use SLX-21864.DNAA001.barcodes.UMI.counts.txt as input for Create_Barcode_Whitelist.R
 
 ## Generate bowtie index for barcode whitelist
-Use the barcode whitelist to generate a bowtie index against which barcode sequences from single cellexperiments will be mapped 
+Use the barcode whitelist to generate a bowtie index against which barcode sequences from single cell experiments will be mapped 
 ```
 bowtie-build -f DNAA001_BC_whitelist.fasta DNAA001_BC
 ```
