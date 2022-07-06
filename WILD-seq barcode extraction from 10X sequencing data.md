@@ -1,5 +1,5 @@
-# Assignment of WILD-seq barcodes to cells from 10X sequencing
-This pipeline extracts the barcodes from a 10X sequencing run and the matched PCR enrichment sequencing and assigns a WILD-seq barcode to cells
+# Assignment of WILD-seq barcode extraction from 10X sequencing
+This pipeline extracts the WILD-seq barcodes and corresponding 10X cell barcode and UMI information from a 10X sequencing run 
 
 ## Prerequisits
 **cellranger** https://support.10xgenomics.com/single-cell-gene-expression/software/overview/welcome
