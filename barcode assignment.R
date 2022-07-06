@@ -28,8 +28,8 @@ colnames(DV1_filtered) <- c("CBC", "barcode_name", "UMI_count", "total_UMI", "fr
 DV1.10x <- read.table("SITTA11_CBC_table_full.txt", header = T)
 DV1.10x$CBC <- gsub("CB:Z:", "", DV1.10x$CBC)
 
-aggregate <- DV1.10x %>% group_by_(.dots=c("CBC","barcode_name")) %>% summarize(UMI_count=length(UMI))
-CB_counts <- aggregate %>% group_by_("CBC") %>% summarize(total_UMI=sum(UMI_count))
+aggregate <- DV1.10x %>% group_by(CBC,barcode_name) %>% summarize(UMI_count=length(UMI))
+CB_counts <- aggregate %>% group_by(CBC) %>% summarize(total_UMI=sum(UMI_count))
 DV1.10x.table <- merge(aggregate, CB_counts, by="CBC")
 DV1.10x.table$fraction <- DV1.10x.table$UMI_count/DV1.10x.table$total_UMI
 DV1.10x.table <- subset(DV1.10x.table, DV1.10x.table$UMI_count >=2 & DV1.10x.table$fraction > 0.5)# at least 2 UMIs and more that 50% of total UMIs for the cell supporting assignment
@@ -38,11 +38,11 @@ DV1.10x.table <- subset(DV1.10x.table, DV1.10x.table$UMI_count >=2 & DV1.10x.tab
 ## Barcode assignment from the single cell transcriptomic sequencing data and from the PCR enrichment are combined to get final assignment
 DV1.merge <- merge(DV1.10x.table, DV1_filtered, by = "CBC", all = T)
 
-DV1.merge$clonex_BC <- ifelse(is.na(DV1.merge$barcode_name.x) == TRUE, DV1.merge$barcode_name.y, ifelse(is.na(DV1.merge$barcode_name.y) == T, DV1.merge$barcode_name.x, ifelse(DV1.merge$barcode_name.x == DV1.merge$barcode_name.y, DV1.merge$barcode_name.x, "non-match")))
+DV1.merge$barcode_name <- ifelse(is.na(DV1.merge$barcode_name.x) == TRUE, DV1.merge$barcode_name.y, ifelse(is.na(DV1.merge$barcode_name.y) == T, DV1.merge$barcode_name.x, ifelse(DV1.merge$barcode_name.x == DV1.merge$barcode_name.y, DV1.merge$barcode_name.x, "non-match")))
 DV1.merge$origin <- ifelse(is.na(DV1.merge$barcode_name.x) == TRUE, "pcr-enrichment", ifelse(is.na(DV1.merge$barcode_name.y) == T, "10X", ifelse(DV1.merge$barcode_name.x == DV1.merge$barcode_name.y, "both", "non-match")))
 DV1.merge <- DV1.merge[!(DV1.merge$origin == "10X" & DV1.merge$UMI_count.x < 5),] # more stringent filtering if not represented in both PCR enrichment and 10X data
 DV1.merge <- DV1.merge[!(DV1.merge$origin == "pcr-enrichment" & DV1.merge$UMI_count.y < 30),] # more stringent filtering if not represented in both PCR enrichment and 10X data
 
-barcode.table <- DV1.merge[,c("CBC","clonex_BC", "origin")]
+barcode.table <- DV1.merge[,c("CBC","barcode_name", "origin")]
 
 write.table(barcode.table, "assigned_barcodes_DV1.txt", sep = "\t", row.names = F, quote = F)
