@@ -1,4 +1,5 @@
 # This R script provides an example of how WILD-seq barcodes were assigned to a single cell sequencing run
+# It uses the WILD-seq barcode tables generated from both the PCR enrichment fastq alignment and the 10X transcriptomic fastq alignment as processed in the previous steps of the pipeline
 
 library(dplyr)
 library(tidyr)
