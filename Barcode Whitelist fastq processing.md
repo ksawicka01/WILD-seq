@@ -9,7 +9,7 @@ This pipeline generates a whitelist of barcodes present in the WILD-seq cell poo
 ## Input file
 RT-PCR is performed as described in Materials and Methods subsection 'Whitelist generation of WILD-seq barcodes' and the fastq files from the sequencing of the PCR products processed using the following pipeline to generate a table of barcodes and associated UMI counts
 
-The following commands are based on starting from a fastq file called SLX-21864.DNAA001.000000000-KF8JL.s_1.r_1.fq.gz
+The following commands are based on starting from a fastq file called SLX-21864.DNAA001.000000000-KF8JL.s_1.r_1.fq.gz which is available in the Data folder.
 
 ## Trim 3'end of reads 
 Reads are trimmed on the 3'end to remove flanking sequence after the barcode
