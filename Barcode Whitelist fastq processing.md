@@ -40,3 +40,5 @@ This prepares a table with every detected barcode-UMI combination and the number
 awk 'BEGIN{RS="@M"}{print $1,"\t",$3}' SLX-21864.DNAA001.BC.UMI.fq | awk -F"\t|_" '{print $2,$3}' | awk -e '$1 ~ /\w/ {print $0}'> SLX-21864.DNAA001.BC.UMI.txt
 sort SLX-21864.DNAA001.barcodes.UMI.txt | uniq -c > SLX-21864.DNAA001.barcodes.UMI.counts.txt
 ```
+
+This file can then be used as input for Create_Barcode_Whitelist.R
