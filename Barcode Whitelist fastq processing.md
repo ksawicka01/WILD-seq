@@ -1,4 +1,4 @@
-# Processing fastq sequencing files from WILD-seq barcode RT-PCR to extract barcode information
+# Processing fastq sequencing files from WILD-seq barcode RT-PCR to generate whitelist of barcodes
 This pipeline generates a whitelist of barcodes present in the WILD-seq cell pool. This whitelist is used as a reference for assignment of WILD-seq barcodes in subsequent single cell experiments
 
 ## Prerequisits
@@ -41,4 +41,9 @@ awk 'BEGIN{RS="@M"}{print $1,"\t",$3}' SLX-21864.DNAA001.BC.UMI.fq | awk -F"\t|_
 sort SLX-21864.DNAA001.barcodes.UMI.txt | uniq -c > SLX-21864.DNAA001.barcodes.UMI.counts.txt
 ```
 
-This file can then be used as input for Create_Barcode_Whitelist.R
+## Generate barcode whitelist
+This file SLX-21864.DNAA001.barcodes.UMI.counts.txt as input for Create_Barcode_Whitelist.R
+
+## Generate bowtie index for barcode whitelist
+Use the barcode whitelist to generate a bowtie index against which barcode sequences from single cellexperiments will be mapped 
+
