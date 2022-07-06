@@ -56,6 +56,26 @@ bowtie -f -v 2 BC_index bamtofastq_R2_filtered_cut.fa > bamtofastq_R2.bowtie
 samtools view SITTA11_4T1_pHSW8.bam | sed -r -n 's/.*(A00489[:A-Z0-9]*).*(CB:Z:[ACTG]*).*(UB:Z:[ACTG]*).*/\1 \2 \3/p' > SITTA11_4T1_pHSW8.CB.UB.txt
 ```
 
+## Merge the bowtie output and the 10x cell barcode and UMI information
+Here is an example of an R script which will do this.
+```
+library(dplyr)
+library(tidyr)
+
+bowtie <- read.table("bamtofastq_R2.bowtie", sep="\t")
+colnames(bowtie) <- c("read","strand","barcode_name","offset","seq","qualities","X", "mismatches")
+CB.UB <- read.table("SITTA11_4T1_pHSW8.CB.UB.txt")
+colnames(CB.UB) <- c("read", "CBC", "UMI")
+
+bowtie$read <- as.character(bowtie$read)
+bowtie$read <- gsub (" 3:N:0:0", "", bowtie$read)
+
+table <- merge(CB.UB, bowtie, by="read")
+table <- table[,c("CBC", "UMI", "barcode_name")] 
+table <- distinct(table) 
+
+write.table(table, "SITTA11_CBC_table_full.txt", sep="\t", row.names = F, quote = F)
+```
 
 
 
