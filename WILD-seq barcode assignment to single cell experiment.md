@@ -57,7 +57,7 @@ samtools view SITTA11_4T1_pHSW8.bam | sed -r -n 's/.*(A00489[:A-Z0-9]*).*(CB:Z:[
 ```
 
 ## Merge the bowtie output and the 10x cell barcode and UMI information
-Here is an example of an R script which will do this.
+Here is an example of an R script which will do this and tidy up the tables to just the information needed for downstream processing.
 ```
 library(dplyr)
 library(tidyr)
