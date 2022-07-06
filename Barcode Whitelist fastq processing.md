@@ -6,6 +6,8 @@ This pipeline generates a whitelist of barcodes present in the WILD-seq cell poo
 
 **umi_tools** Available from https://umi-tools.readthedocs.io/en/latest/
 
+**bowtie** Available from http://bowtie-bio.sourceforge.net/manual.shtml
+
 ## Input file
 RT-PCR is performed as described in Materials and Methods subsection 'Whitelist generation of WILD-seq barcodes' and the fastq files from the sequencing of the PCR products processed using the following pipeline to generate a table of barcodes and associated UMI counts
 
@@ -46,4 +48,6 @@ Use SLX-21864.DNAA001.barcodes.UMI.counts.txt as input for Create_Barcode_Whitel
 
 ## Generate bowtie index for barcode whitelist
 Use the barcode whitelist to generate a bowtie index against which barcode sequences from single cellexperiments will be mapped 
-
+```
+bowtie-build -f DNAA001_BC_whitelist.fasta DNAA001_BC
+```
