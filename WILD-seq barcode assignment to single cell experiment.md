@@ -16,11 +16,7 @@ This pipeline extracts the barcodes from a 10X sequencing run and the matched PC
 
 ## Custom reference for cellranger
 
-A custom referenece for cellranger alignment was created by adding the sequence of the WILD-seq transcript to the mouse genome using cellranger mkref. The relevant files are available in the WILD-seq/data/custom_pHSW8/ folder
-
-```
-cellranger mkref --genome=pHSW8_genome --fasta=combined_genome.fa --genes=genes.gtf
-```
+A custom referenece for cellranger alignment was created by adding the sequence of the WILD-seq transcript to the mouse genome using cellranger mkref. The fasta file for the plasmid sequence is provided in the WILD-seq/data/custom_pHSW8/ folder and can be used to generate your own custom genome file. The WILD-seq transcript is 4T1_pHSW8:5266-6184.
 
 ## Run cellranger for the 10X sequencing run
 
@@ -36,6 +32,6 @@ cellranger count --id=${SampleID} --localcores=20 --localmem=50  --transcriptome
 samtools view -b possorted_genome_bam.bam 4T1_pHSW8:5398-5441 > SITTA11_4T1_pHSW8.bam
 ```
 
-
+## 
 
 
