@@ -1,4 +1,4 @@
-##This R script processes a file containing WILD-seq barcode sequences and their associated UMI counts such as that generated using the pipeline described in Barcode Whitelist fastq processing to generate a whitelist of barcodes present in the sample
+## This R script processes a file containing WILD-seq barcode sequences and their associated UMI counts such as that generated using the pipeline described in Barcode Whitelist fastq processing to generate a whitelist of barcodes present in the sample
 
 library(dplyr)
 library(tidyr)
@@ -27,4 +27,10 @@ for( i in 1:length(cl)){
 BC_whitelist <- BC_clustered %>% group_by(cluster) %>% top_n(1, UMI_count)
 
 write.table(BC_clustered, file="DNAA001_BC_all.txt", sep = "\t", quote = F, row.names = F)
-write.table(BC_whitelist, file="DNAA001_BC_whitelist.txt), sep = "\t", quote = F, row.names = F)
+write.table(BC_whitelist, file="DNAA001_BC_whitelist.txt"), sep = "\t", quote = F, row.names = F)
+
+# create a fasta file of barcode sequences to use to generate a bowtie index
+output<- character(nrow(DNAA001_BC_whitelist) * 2)
+output[c(TRUE, FALSE)] <- paste0(">", DNAA001_BC_whitelist$cluster)
+output[c(FALSE, TRUE)] <- as.character(DNAA001_BC_whitelist$barcode)
+writeLines(output, "DNAA001_BC_whitelist.fasta")
