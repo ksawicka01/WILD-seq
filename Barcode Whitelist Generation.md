@@ -11,10 +11,19 @@ This pipeline generates a whitelist of barcodes present in the WILD-seq cell poo
 ## Input file
 RT-PCR is performed as described in Materials and Methods subsection 'Whitelist generation of WILD-seq barcodes' and the fastq files from the sequencing of the PCR products processed using the following pipeline to generate a table of barcodes and associated UMI counts
 
+The DNA library fragments have the following  format:
+AATGATACGGCGACCACCGAGATCTACACCAGCAGTATGCATGCGCTCGTTTACTATACGAT**BBBBBBBBBBBB**TGCATCGGTTAACCGATGCA**BBBBBBBBBBBB**CGGATAGAACTTTGAATCGCTTG**NNNNNNNN**AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC**IIIIII**ATCTCGTATGCCGTCTTCTGCTTG
+where:
+- B represents the WILD-seq barcode
+- N represents the UMI
+- I represents the read index
+
+Sequencing with a CustomRead1 primer (CCAGCAGTATGCATGCGCTCGTTTACTATACGAT) means that sequencing reads begin at the beginning of the first barcode sequence
+
 The following commands are based on starting from a fastq file called SLX-21864.DNAA001.000000000-KF8JL.s_1.r_1.fq.gz which is available in the Data folder.
 
 ## Trim 3'end of reads 
-Reads are trimmed on the 3'end to remove flanking sequence after the barcode
+Reads are trimmed on the 3'end to remove the flanking sequence after the UMI
 ```
 cutadapt -a AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC --discard-untrimmed -o SLX-21864.DNAA001.trimmed.fq.gz  SLX-21864.DNAA001.000000000-KF8JL.s_1.r_1.fq.gz
 ```
@@ -30,8 +39,8 @@ zcat SLX-21864.DNAA001.trimmed.fq.gz | egrep -A 2 -B 1 ^[ATGC]{12}TGCATCGGTTAACC
 umi_tools extract --extract-method=string --3prime --bc-pattern=NNNNNNNN --stdin SLX-21864.DNAA001.trimmed.filtered.fq --log=processed.log --stdout SLX-21864.DNAA001.trimmed.filtered.UMI.fq
 ```
 
-## Trim 5' end of reads
-Reads are trimmed on the 5'end to remove flanking sequence after the barcode
+## Trim 3' end of reads
+Reads are trimmed on the 3'end to remove flanking sequence after the barcode
 ```
 cutadapt -a CGGATAGAACTTTGAATCGCTTG --discard-untrimmed -o SLX-21864.DNAA001.BC.UMI.fq SLX-21864.DNAA001.trimmed.filtered.UMI.fq
 ```
