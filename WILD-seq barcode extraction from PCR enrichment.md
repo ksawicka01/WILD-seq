@@ -22,16 +22,17 @@ umi_tools whitelist --stdin SITTD10_R1_mRNA_All.fastq.gz --bc-pattern=CCCCCCCCCC
 Cell barcode and UMI information is extracted from Read1 of PCR run and added into the Read2 names
 ```
 # If required combine all read1 fastq files and all read2 fastq files into a single file each
-cat SITTB1*_R1*.fastq.gz > SITTB1_PCR_All_R1.fastq
-cat SITTB1*_R2*.fastq.gz > SITTB1_PCR_All_R2.fastq
+cat SITTB1*_R1*.fastq.gz > SITTB1_PCR_All_R1.fastq.gz
+cat SITTB1*_R2*.fastq.gz > SITTB1_PCR_All_R2.fastq.gz
 
 # Filter cell barcodes in the PCR sequencing for those on the transcriptomics run whitelist
-umi_tools extract --bc-pattern=CCCCCCCCCCCCCCCCNNNNNNNNNNNN --stdin SITTB1_PCR_All_R1.fastq --read2-stdout --read2-in=SITTB1_PCR_All_R2.fastq --stdout=SITTB1_PCR_All_R2_extracted.fastq --whitelist=whitelist_SIGAD10_mRNA_All.txt --filter-cell-barcode
+umi_tools extract --bc-pattern=CCCCCCCCCCCCCCCCNNNNNNNNNNNN --stdin SITTB1_PCR_All_R1.fastq.gz --read2-stdout --read2-in=SITTB1_PCR_All_R2.fastq.gz --stdout=SITTB1_PCR_All_R2_extracted.fastq.gz --whitelist=whitelist_SIGAD10_mRNA_All.txt --filter-cell-barcode
 ```
 
 ## Extract barcode sequence 
-Leading and trailing sequences are removed and only readss which match the expected WILD-seq barcode pattern are retained.
+Leading and trailing sequences are removed and only reads which match the expected WILD-seq barcode pattern are retained.
 ```
+gunzip SITTB1_PCR_All_R2_extracted.fastq.gz
 cutadapt -g NNNNNNNNNNCAGCCATGCGCTCGTTTACTATACGAT --discard-untrimmed -o SITTB1_PCR_All_R2_extracted_trim5.fastq SITTB1_PCR_All_R2_extracted.fastq
 cutadapt -a CGGATAGAACT --discard-untrimmed -o SITTB1_PCR_All_R2_extracted_trim5_trim3.fastq SITTB1_PCR_All_R2_extracted_trim5.fastq
 egrep -A 2 -B 1 [ATGC]{12}TGCATCGGTTAACCGATGCA[ATGC]{12} SITTB1_PCR_All_R2_extracted_trim5_trim3.fastq | sed '/^--$/d' > SITTB1_PCR_All_R2_extracted_trim5_trim3_filtered.fastq
