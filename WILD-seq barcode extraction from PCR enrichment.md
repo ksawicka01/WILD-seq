@@ -13,9 +13,9 @@ This pipeline extracts the WILD-seq barcodes and corresponding 10X cell barcode 
 A whitelist of cell barcodes is generated based on corresponing 10X transcriptome sequencing run
 ```
 # If required combine together all Read1 fastq files from 10X transcriptomics experiment
-cat SITTA11_*_R1*.fastq.gz > SITTA11_R1_mRNA_All.fastq.gz
+cat SITTD10_*_R1*.fastq.gz > SITTD10_R1_mRNA_All.fastq.gz
 
-umi_tools whitelist --stdin SITTA11_R1_mRNA_All.fastq.gz --bc-pattern=CCCCCCCCCCCCCCCCNNNNNNNNNN --set-cell-number=6000 --log2stderr > whitelist_SIGAD10_mRNA_All.txt
+umi_tools whitelist --stdin SITTD10_R1_mRNA_All.fastq.gz --bc-pattern=CCCCCCCCCCCCCCCCNNNNNNNNNN --set-cell-number=6000 --log2stderr > whitelist_SIGAD10_mRNA_All.txt
 ```
 
 ## Extract CBs and UMIs 
