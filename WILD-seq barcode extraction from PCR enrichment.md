@@ -15,16 +15,15 @@ A whitelist of cell barcodes is generated based on corresponing 10X transcriptom
 # If required combine together all Read1 fastq files from 10X transcriptomics experiment
 cat SITTA11_*_R1*.fastq.gz > SITTA11_R1_mRNA_All.fastq.gz
 
-gunzip SITTA11_R1_mRNA_All.fastq.gz
-umi_tools whitelist --stdin SITTA11_R1_mRNA_All.fastq --bc-pattern=CCCCCCCCCCCCCCCCNNNNNNNNNN --set-cell-number=6000 --log2stderr > whitelist_SIGAD10_mRNA_All.txt
+umi_tools whitelist --stdin SITTA11_R1_mRNA_All.fastq.gz --bc-pattern=CCCCCCCCCCCCCCCCNNNNNNNNNN --set-cell-number=6000 --log2stderr > whitelist_SIGAD10_mRNA_All.txt
 ```
 
 ## Extract CBs and UMIs 
 Cell barcode and UMI information is extracted from Read1 of PCR run and added into the Read2 names
 ```
 # If required combine all read1 fastq files and all read2 fastq files into a single file each
-cat SITTB1*_R1*.fastq > SITTB1_PCR_All_R1.fastq
-cat SITTB1*_R2*.fastq > SITTB1_PCR_All_R2.fastq
+cat SITTB1*_R1*.fastq.gz > SITTB1_PCR_All_R1.fastq
+cat SITTB1*_R2*.fastq.gz > SITTB1_PCR_All_R2.fastq
 
 # Filter cell barcodes in the PCR sequencing for those on the transcriptomics run whitelist
 umi_tools extract --bc-pattern=CCCCCCCCCCCCCCCCNNNNNNNNNNNN --stdin SITTB1_PCR_All_R1.fastq --read2-stdout --read2-in=SITTB1_PCR_All_R2.fastq --stdout=SITTB1_PCR_All_R2_extracted.fastq --whitelist=whitelist_SIGAD10_mRNA_All.txt --filter-cell-barcode
