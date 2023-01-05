@@ -1,7 +1,8 @@
 # WILD-seq : Wholistic Interrogation of Lineage Dynamics by sequencing for clonal transcriptomic analysis and identification of chemoresistance.
 
 This repository contains code related to the publication:
-Sophia A Wild Ian G Cannell Ashley Nicholls Katarzyna Kania Dario Bressan CRUK IMAXT Grand Challenge Team Gregory J Hannon Kirsty Sawicka (2022) Clonal transcriptomics identifies mechanisms of chemoresistance and empowers rational design of combination therapies eLife 11:e80981.
+
+Sophia A Wild, Ian G Cannell, Ashley Nicholls, Katarzyna Kania, Dario Bressan, CRUK IMAXT Grand Challenge Team, Gregory J Hannon, Kirsty Sawicka (2022). Clonal transcriptomics identifies mechanisms of chemoresistance and empowers rational design of combination therapies. eLife 11:e80981.
 https://doi.org/10.7554/eLife.80981
 
 Details for analysis of the following steps in the protocol are provided:
